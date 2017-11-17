@@ -1,3 +1,7 @@
+'''
+generating the insert command for the 1st set of excel file
+'''
+
 from openpyxl import load_workbook
 import os
 
@@ -52,7 +56,7 @@ for xl in all_File:
             xs = str(x)
             A = 'A' + xs
             B = 'B' + xs
-            D = 'D' + xs
+            D = 'D' +xs
             E = 'E' + xs
             file.write(
                 "INSERT INTO `fxbio`.`ngs_data` (`Sample_ID`, `Sample_Year`, `DataType`, `Locus`, `Allele`, `Read_Count`, `Sequence`) VALUES ('" + xl[
