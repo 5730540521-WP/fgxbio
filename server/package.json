@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server part of FGxBio web application project",
+  "main": "index.js",
+  "scripts": {
+	"start": "nodemon src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/SinZetA/fgxbio.git"
+  },
+  "author": "Wasin Panitansirikul",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/SinZetA/fgxbio#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "https": "^1.0.0"
+  }
+}
