@@ -9,6 +9,7 @@ const mysql = require('mysql')
 const config = require('./config')
 const api = require('./api')
 
+const authServ = require('./services/auth')
 
 let app = express()
 app.server = http.createServer(app)
@@ -30,5 +31,9 @@ app.use((err, req, res, next) => {
 app.server.listen(process.env.PORT || config.port, () => {
   console.log(`Started on port ${app.server.address().port}`)
 })
+
+var test = authServ.authenticateAdmin('Admin01')
+console.log(test)
+
 
 module.exports = app
