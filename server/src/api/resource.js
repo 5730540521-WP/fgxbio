@@ -25,10 +25,22 @@ router.get('/statistic', async (req, res, next) => {
       function (err, rows){
         if(err)
           throw (err)
-        
-          console.log(rows)
           res.json(rows)
       })
+    } catch (error) {
+      next(error)
+    }
+})
+
+router.get('/statistic/:locus', async (req, res, next) => {
+  // Get Locus and GO
+  try {
+    await con.query(`SELECT * FROM ngs_data WHERE Locus = '${req.params.locus}'`,
+            function(err, rows){
+                if(err)
+                  throw err
+                res.send(rows)
+    })
     } catch (error) {
       next(error)
     }
@@ -39,15 +51,26 @@ router.get('/details', (req, res, next) => {
 
 })
 
-router.get('/marker/:locus',async (req, res, next) => {
+router.get('/marker/:locus/:allele',async (req, res, next) => {
   try {
-    const temp = await con.query(`SELECT COUNT (*) AS total FROM ngs_data WHERE Locus = '${req.params.locus}'`,
+    await con.query(`SELECT COUNT(*) AS total FROM ngs_data WHERE Locus = '${req.params.locus}'`,
       function (err, rows){
         if(err)
           throw (err)
-        total = rows[0].total
+        var total = rows[0].total
+        total = parseInt(total)
           console.log(total)
+          console.log(req.params.allele)
       })
+    await con.query(`SELECT COUNT(*) AS interest FROM ngs_data WHERE Locus = '${req.params.locus}' && Allele = '${req.params.allele}'`,
+      function (err, rows){
+        if(err)
+          throw (err)
+        var interest = rows[0].interest
+        interest = parseInt(interest)
+          console.log(parseInt(interest)*100/parseInt(total))
+      }
+  )
   } catch (error) {
     next (error)
   }

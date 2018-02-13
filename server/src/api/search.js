@@ -14,30 +14,22 @@ var con = mysql.createConnection({
 })
 
 router.get('/',async (req, res, next) => {
-  console.log('Reach Search')
-  var output = '<html><head></head><body><h1>Search</h1><h2>Begin'  
-
+  
   await con.query('SELECT * FROM ngs_data WHERE Sample_ID = "032F" && DataType ="A"',
             function(err,rows){
                 if(err) 
                   throw err
-                
-                output += rows[0].Sample_ID
-                console.log(rows[0])
-                
+                console.log(rows[1])                
   })
-  output += '</h2></body></html>'
-  console.log(output)
-  res.send(output)
+  res.send('search Page')
   next()
 })
 
 router.get('/manual', (req, res, next) => {
-  console.log('Manual input search')
   res.send('<html><head></head><body><h1>Manual Box Box Box</h1></body></html>')
 })
 
-router.get('/:id',async (req, res, next) => {
+router.get('/done',async (req, res, next) => {
   try {
     console.log(req.params.id)
     const admin = await authServ.authenticateAdmin(req.params.id)

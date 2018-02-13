@@ -32,8 +32,4 @@ app.server.listen(process.env.PORT || config.port, () => {
   console.log(`Started on port ${app.server.address().port}`)
 })
 
-var test = authServ.authenticateAdmin('Admin01')
-console.log(test)
-
-
 module.exports = app
