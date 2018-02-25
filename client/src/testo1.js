@@ -11,21 +11,17 @@ import TabExample from './component/slide/slide.js';
 import BottomNav from './component/bottom/bottomNav';
 import { Toolbar } from 'material-ui/Toolbar';
 
-import Testo1 from './testo1';
-import Testo2 from './testo2';
-
-class App extends Component {
+class testo1 extends Component {
   constructor(props){
     super(props);
   }
-  /*render() {
+  render() {
     return (
       <div>
        
           
               <MuiThemeProvider>
               <div>
-                
                 <GuestNavbar />
               </div>
               <div>
@@ -37,15 +33,7 @@ class App extends Component {
               </MuiThemeProvider>
       </div>
     );
-  }*/
-
-  render() {
-    return (
-      <div>
-        <Testo2 />
-      </div>
-    )
   }
 }
 
-export default App;
+export default testo1;

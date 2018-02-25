@@ -1,5 +1,6 @@
 const { version } = require('../../package.json')
 const { Router } = require('express')
+const pythonShell = require('python-shell')
 
 const searchRoute = require('./search')
 const resourceRoute = require('./resource')
@@ -14,11 +15,10 @@ api.use('/search', searchRoute)
 api.use('/resource', resourceRoute)
 
 api.get('/',  (req, res) => {
-  //res.send('<html><head></head><body><h1>Main FGXBiO</h1></body></html>')
-  res.json({ version })
+   res.json({ version })
 })
 
-api.post('/admin-auth', async (req, res, next) => {
+api.get('/admin-auth', async (req, res, next) => {
   try {
     const { username, password } = req.body
     await authServ.authenticateAdmin({ username: 'Admin01', password: '12345' })
@@ -31,6 +31,15 @@ api.post('/admin-auth', async (req, res, next) => {
 
 api.post('/signout', (req, res, next) => {
   res.json('signout successful')
+})
+
+api.get('/python', (req, res, next) => {
+  pythonShell.run('test.py', function(err){
+    if (err)
+      console.log('error')
+    console.log('finished')
+  })
+  res.json('finish')
 })
 
 module.exports = api
