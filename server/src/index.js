@@ -20,10 +20,9 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'src')))
 // middleware
 
-app.use('/', api)
+app.use('/api', api)
 
 app.use((err, req, res, next) => {
-  console.log(err)
   res.status(err.status)
   res.json({ error: err.message })
 })

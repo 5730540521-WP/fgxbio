@@ -26,7 +26,7 @@ router.get('/',async (req, res, next) => {
 })
 
 router.get('/manual', (req, res, next) => {
-  res.send('<html><head></head><body><h1>Manual Box Box Box</h1></body></html>')
+  
 })
 
 router.get('/done',async (req, res, next) => {

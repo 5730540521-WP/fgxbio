@@ -1,6 +1,10 @@
 const { version } = require('../../package.json')
 const { Router } = require('express')
-const pythonShell = require('python-shell')
+const PythonShell = require('python-shell')
+
+const util = require('util')
+
+
 
 const searchRoute = require('./search')
 const resourceRoute = require('./resource')
@@ -23,7 +27,7 @@ api.get('/admin-auth', async (req, res, next) => {
     const { username, password } = req.body
     await authServ.authenticateAdmin({ username: 'Admin01', password: '12345' })
     res.json({ })
-    console.log('why u run this shit')
+
   } catch (error) {
     next (error)
   }
@@ -34,12 +38,18 @@ api.post('/signout', (req, res, next) => {
 })
 
 api.get('/python', (req, res, next) => {
-  pythonShell.run('test.py', function(err){
-    if (err)
-      console.log('error')
-    console.log('finished')
-  })
-  res.json('finish')
+  const { spawn } = require('child_process')
+  const pyProg = spawn('python', ['./oest.py'])
+
+  console.log(__dirname);
+  
+  pyProg.stdout.on('data', function(data) {
+
+    console.log(data.toString());
+    res.write(data);
+    res.end('end');
+  });
+
 })
 
 module.exports = api
