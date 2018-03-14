@@ -1,33 +1,23 @@
-const mysql = require('mysql')
-
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Uq42=Tc8",
-  database: "fxbio"
-})
+const con = require('../config/constant')
 
 async function authenticateAdmin (values) {
-  try {
-    const user = await con.query(`SELECT COUNT (*) AS userFound FROM admins WHERE Username = '${values}' && Pass = '12345'`,
+    con.query(`SELECT * FROM admins WHERE Username = '${values.username}' && Pass = '${values.password}'`,
      function (error, result){
         if(error)
           throw (error)
-        if(result[0].userFound == 1){
-          console.log(result[0].userFound)
+        if(result){
+          console.log(JSON.stringify(result))
           console.log('userfound logging in')
+          return JSON.parse(JSON.stringify(result))
         }
         else{
           const error = new Error('User not found')
           error.status = 401
           throw error
         }
-        return result
     }) 
-  } catch(error) { 
-    next(error)
-  }
-}
+} 
+
 
 function isAuthenticatedAdmin(req, res, next){
   if(req.admin)

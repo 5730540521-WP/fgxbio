@@ -1,11 +1,5 @@
-const mysql = require('mysql')
+const con = require('../config/constant')
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Uq42=Tc8",
-  database: "fxbio"
-})
 
 //Admin add by excel
 async function addDataByExcel(){

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-export default class LoginModal extends React.Component {
+export default class LoginModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      username: '',
+      password: ''
     };
 
     this.toggle = this.toggle.bind(this);
@@ -17,6 +19,13 @@ export default class LoginModal extends React.Component {
     });
   }
 
+  onLoginSubmit(event) {
+    event.preventDefault();
+    const { username, password } = event;
+    console.log(event);
+    console.log(password);
+  }
+
   render() {
     return (
       <div>
@@ -24,7 +33,7 @@ export default class LoginModal extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Sign In</ModalHeader>
           <ModalBody>
-            <Form>
+            <Form onSubmit={this.onLoginSubmit}>
               <FormGroup>
                 <Label for="username">Username</Label>
                 <Input type="username" name="username" id="username" placeholder="username" />

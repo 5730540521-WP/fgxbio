@@ -1,17 +1,10 @@
 const { Router }  = require('express')
 const _ = require('lodash')
-const mysql = require('mysql')
 
 const authServ = require('../services/auth')
+const con = require('../config/constant')
 
 let router = Router()
-
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Uq42=Tc8",
-  database: "fxbio"
-})
 
 router.get('/',async (req, res, next) => {
   
@@ -19,13 +12,13 @@ router.get('/',async (req, res, next) => {
             function(err,rows){
                 if(err) 
                   throw err
-                console.log(rows[1])                
+                res.json(rows)        
   })
-  res.send('search Page')
-  next()
 })
 
-router.get('/manual', (req, res, next) => {
+router.post('/match', async (req, res, next) => {
+  //req with a lot of param of 'locus: "allele"'
+  
   
 })
 

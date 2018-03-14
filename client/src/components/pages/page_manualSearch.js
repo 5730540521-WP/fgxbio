@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { Button, ButtonGroup, ButtonToolbar } from 'reactstrap';
-import { InputGroup, InputGroupAddon, Form, Input } from 'reactstrap';
+import { Container, Row, Col, InputGroup, InputGroupAddon, Form, FormGroup, Input } from 'reactstrap';
 
 
-import GuestNavbar from '../header/GuestNavbar';
 import { Kit_List,
   InvestigatorIDplex,
   PowerPlex16,
@@ -38,8 +37,10 @@ export default class PageManualSearch extends Component {
         return _.map(InvestigatorIDplex, Locus => {
           return (
             <InputGroup>
+              <Col>
               <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
-              <Input width="5%" placeholder={Locus} />
+              <Input type="text" size="3" name={Locus} id={Locus} />
+              </Col>
             </InputGroup>
           )
         });
@@ -47,8 +48,10 @@ export default class PageManualSearch extends Component {
         return _.map(PowerPlex16, Locus => {
           return (
             <InputGroup>
+              <Col>
               <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
-              <Input placeholder={Locus} />
+              <Input type="text" size="3" name={Locus} id={Locus} />
+              </Col>
             </InputGroup>
           )
         });
@@ -56,8 +59,10 @@ export default class PageManualSearch extends Component {
         return _.map(PowerPlex18D, Locus => {
           return (
             <InputGroup>
+              <Col>
               <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
-              <Input placeholder={Locus} />
+              <Input type="text" size="3" name={Locus} id={Locus} />
+              </Col>
             </InputGroup>
         )
       });
@@ -65,17 +70,21 @@ export default class PageManualSearch extends Component {
       return _.map(AmpFLSTR_Identifiler_Plus, Locus => {
         return (
           <InputGroup>
-            <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
-            <Input placeholder={Locus} />
-          </InputGroup>
+              <Col>
+              <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
+              <Input type="text" size="3" name={Locus} id={Locus} />
+              </Col>
+            </InputGroup>
         );
       });
       case 'Verifiler_Express':
         return _.map(Verifiler_Express, Locus => {
           return (
             <InputGroup>
+              <Col>
               <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
-              <Input placeholder={Locus} />
+              <Input type="text" size="3" name={Locus} id={Locus} />
+              </Col>
             </InputGroup>
           );
       })
@@ -83,8 +92,10 @@ export default class PageManualSearch extends Component {
         return _.map(Globalfiler, Locus => {
           return (
             <InputGroup>
+              <Col>
               <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
-              <Input placeholder={Locus} />
+              <Input type="text" size="3" name={Locus} id={Locus} />
+              </Col>
             </InputGroup>
           );
         });
@@ -92,8 +103,10 @@ export default class PageManualSearch extends Component {
         return _.map(Forenseq, Locus => {
           return (
             <InputGroup>
+              <Col>
               <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
-              <Input placeholder={Locus} />
+              <Input type="text" size="3" name={Locus} id={Locus} />
+              </Col>
             </InputGroup>
           );
         });
@@ -101,27 +114,36 @@ export default class PageManualSearch extends Component {
   }
 
   onFormSubmit(event) {
-    
+   
   }
 
   render(){
     return(
       <div>
-        <GuestNavbar/>
-          Pick A Kit_List: {this.state.currentKit}
+         
         <div>
+          <Container>
+          <p className="text-primary">Pick A Kit_List: {this.state.currentKit} </p>
+          <Row>
           <ButtonToolbar>
             <ButtonGroup>          
               {this.renderKitList()}
             </ButtonGroup>
           </ButtonToolbar>
+          </Row>
+          </Container>
         </div>
         <div>
             <Form inline onSubmit={this.onFormSubmit}>
+              <Container>
+              <Row>
               <InputGroup>
               {this.renderLocusList()}
               </InputGroup>
+              </Row>
+              
               <Button>Submit</Button>
+              </Container>
             </Form>
         </div>
       </div>

@@ -14,6 +14,9 @@ const authServ = require('./services/auth')
 let app = express()
 app.server = http.createServer(app)
 
+app.use(bodyParser.json({
+  limit: config.bodyLimit
+}))
 app.use(morgan('dev'))
 app.use(cookieParser())
 

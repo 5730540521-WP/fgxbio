@@ -1,13 +1,14 @@
 const { version } = require('../../package.json')
 const { Router } = require('express')
 const PythonShell = require('python-shell')
-
+const jwt = require('jsonwebtoken')
 const util = require('util')
 
 
 
 const searchRoute = require('./search')
 const resourceRoute = require('./resource')
+const con = require('../config/constant')
 
 const authServ = require('../services/auth')
 
@@ -18,23 +19,29 @@ let api = Router()
 api.use('/search', searchRoute)
 api.use('/resource', resourceRoute)
 
-api.get('/',  (req, res) => {
-   res.json({ version })
-})
 
-api.get('/admin-auth', async (req, res, next) => {
-  try {
+api.post('/auth',async (req, res, next) => {
+  try{
     const { username, password } = req.body
-    await authServ.authenticateAdmin({ username: 'Admin01', password: '12345' })
-    res.json({ })
-
+    con.query(`SELECT * FROM admins WHERE Username = '${username}' && Pass = '${password}'`,
+      function(err, rows){
+        if(err)
+          throw(err)
+        res.json({ token: jwt.sign({ User_ID: rows[0].User_ID }, 'FGXBIO_ADMIN') })
+      })
   } catch (error) {
-    next (error)
+    next(error)
   }
+  //should have finished
 })
 
 api.post('/signout', (req, res, next) => {
-  res.json('signout successful')
+  res.send('signout successful')
+})
+
+
+api.get('/',  (req, res) => {
+  res.json({ version })
 })
 
 api.get('/python', (req, res, next) => {

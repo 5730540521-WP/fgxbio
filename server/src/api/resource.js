@@ -1,27 +1,21 @@
 const { Router } = require('express')
 const _ = require('lodash')
-const mysql = require('mysql')
 
 let router = Router()
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "Uq42=Tc8",
-  database: "fxbio"
-})
+const con = require('../config/constant')
 
-router.get('/geographical', (req, res, next) => {
+router.get('/region', (req, res, next) => {
   // North South East West
   
   console.log('search by REGION')
   res.json('NORTH SOUTH EAST WEST')
 })
 
-router.get('/statistic', async (req, res, next) => {
+router.get('/locuslist', async (req, res, next) => {
   // Get Locus and GO
   try {
-    const locus = await con.query('SELECT DISTINCT Locus FROM ngs_data',
+    await con.query('SELECT DISTINCT Locus FROM ngs_data',
       function (err, rows){
         if(err)
           throw (err)
@@ -32,10 +26,23 @@ router.get('/statistic', async (req, res, next) => {
     }
 })
 
+router.get('/locuslist/amount', async (req, res, next) => {
+  try{
+    await con.query('SELECT Locus, COUNT(*) as Amount FROM ngs_data GROUP BY Locus',
+      function( err, rows){
+        if(err)
+          throw (err)
+            res.json(rows)
+      })
+    } catch (error) {
+      next(error)
+    }
+})
+
 router.get('/statistic/:locus', async (req, res, next) => {
   // Get Locus and GO
   try {
-    await con.query(`SELECT * FROM ngs_data WHERE Locus = '${req.params.locus}'`,
+    await con.query(`SELECT Allele, COUNT(*) AS amount FROM ngs_data WHERE Locus = '${req.params.locus}' GROUP BY Allele`,
             function(err, rows){
                 if(err)
                   throw err
@@ -46,18 +53,36 @@ router.get('/statistic/:locus', async (req, res, next) => {
     }
 })
 
+router.get('/statistic/hetero', async(req, res, next) => {
+  try {
+    await con.query(`SELECT a.Locus, COUNT(*) AS Amount FROM (SELECT Sample_Year, Sample_ID,Locus, COUNT(*) AS Amount FROM ngs_data GROUP BY Locus, Sample_Year, Sample_ID) a WHERE a.Amount = 2 GROUP BY a.Locus;`,
+      function(err, rows){
+        if(err)
+          throw err
+        console.log('hi')
+        console.log(rows[0])
+        res.send(rows)
+    })
+    //it just didn't send
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/details', (req, res, next) => {
 
 
 })
 
+//get percentage of that allele on locus
 router.get('/marker/:locus/:allele',async (req, res, next) => {
   try {
+    var total;
     await con.query(`SELECT COUNT(*) AS total FROM ngs_data WHERE Locus = '${req.params.locus}'`,
       function (err, rows){
         if(err)
           throw (err)
-        var total = rows[0].total
+        total = rows[0].total
         total = parseInt(total)
           console.log(total)
           console.log(req.params.allele)
@@ -68,7 +93,7 @@ router.get('/marker/:locus/:allele',async (req, res, next) => {
           throw (err)
         var interest = rows[0].interest
         interest = parseInt(interest)
-          console.log(parseInt(interest)*100/parseInt(total))
+          res.json(parseInt(interest)*100/parseInt(total))
       }
   )
   } catch (error) {
