@@ -11,9 +11,11 @@ export default class PageSearch extends Component {
         <Container>
           <p>We provide our search function for you to compare the data you have with the database</p>
         <div>
+        
         <Button 
           color="success" 
-        >Search using your excel file with specific format</Button>
+        ><Input type="file" name="file" id="exampleFile" />Search using your excel file with specific format</Button>
+     
         </div>
         <div>
         <Button 

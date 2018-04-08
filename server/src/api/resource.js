@@ -5,6 +5,9 @@ let router = Router()
 
 const con = require('../config/constant')
 
+
+
+
 router.get('/region', (req, res, next) => {
   // North South East West
   
@@ -15,7 +18,7 @@ router.get('/region', (req, res, next) => {
 router.get('/locuslist', async (req, res, next) => {
   // Get Locus and GO
   try {
-    await con.query('SELECT DISTINCT Locus FROM ngs_data',
+    con.query('SELECT DISTINCT Locus FROM ngs_data',
       function (err, rows){
         if(err)
           throw (err)
@@ -28,7 +31,7 @@ router.get('/locuslist', async (req, res, next) => {
 
 router.get('/locuslist/amount', async (req, res, next) => {
   try{
-    await con.query('SELECT Locus, COUNT(*) as Amount FROM ngs_data GROUP BY Locus',
+    con.query('SELECT Locus, COUNT(*) as Amount FROM ngs_data GROUP BY Locus',
       function( err, rows){
         if(err)
           throw (err)
@@ -42,7 +45,7 @@ router.get('/locuslist/amount', async (req, res, next) => {
 router.get('/statistic/:locus', async (req, res, next) => {
   // Get Locus and GO
   try {
-    await con.query(`SELECT Allele, COUNT(*) AS amount FROM ngs_data WHERE Locus = '${req.params.locus}' GROUP BY Allele`,
+    con.query(`SELECT Allele, COUNT(*) AS amount FROM ngs_data WHERE Locus = '${req.params.locus}' GROUP BY Allele`,
             function(err, rows){
                 if(err)
                   throw err
@@ -53,15 +56,13 @@ router.get('/statistic/:locus', async (req, res, next) => {
     }
 })
 
-router.get('/statistic/hetero', async(req, res, next) => {
+router.get('/hetero', async(req, res, next) => {
   try {
-    await con.query(`SELECT a.Locus, COUNT(*) AS Amount FROM (SELECT Sample_Year, Sample_ID,Locus, COUNT(*) AS Amount FROM ngs_data GROUP BY Locus, Sample_Year, Sample_ID) a WHERE a.Amount = 2 GROUP BY a.Locus;`,
+    con.query(`SELECT a.Locus, COUNT(*) AS Amount FROM (SELECT Sample_Year, Sample_ID,Locus, COUNT(*) AS Amount FROM ngs_data GROUP BY Locus, Sample_Year, Sample_ID) a WHERE a.Amount = 2 GROUP BY a.Locus;`,
       function(err, rows){
         if(err)
           throw err
-        console.log('hi')
-        console.log(rows[0])
-        res.send(rows)
+        res.json(rows)
     })
     //it just didn't send
   } catch (error) {
@@ -69,16 +70,12 @@ router.get('/statistic/hetero', async(req, res, next) => {
   }
 })
 
-router.get('/details', (req, res, next) => {
-
-
-})
 
 //get percentage of that allele on locus
 router.get('/marker/:locus/:allele',async (req, res, next) => {
   try {
     var total;
-    await con.query(`SELECT COUNT(*) AS total FROM ngs_data WHERE Locus = '${req.params.locus}'`,
+    con.query(`SELECT COUNT(*) AS total FROM ngs_data WHERE Locus = '${req.params.locus}'`,
       function (err, rows){
         if(err)
           throw (err)
@@ -87,7 +84,7 @@ router.get('/marker/:locus/:allele',async (req, res, next) => {
           console.log(total)
           console.log(req.params.allele)
       })
-    await con.query(`SELECT COUNT(*) AS interest FROM ngs_data WHERE Locus = '${req.params.locus}' && Allele = '${req.params.allele}'`,
+    con.query(`SELECT COUNT(*) AS interest FROM ngs_data WHERE Locus = '${req.params.locus}' && Allele = '${req.params.allele}'`,
       function (err, rows){
         if(err)
           throw (err)

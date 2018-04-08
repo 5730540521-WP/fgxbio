@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { API_URL } from '../constants/ConfigConstants';
 
+import { authHeader, history } from 'helpers';
+
 export const userActions = {
   login,
   logout

@@ -23,7 +23,7 @@ export default class GuestNavbar extends Component {
     this.state = {
       isOpen: false
     };
-  }
+  }     
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -33,7 +33,7 @@ export default class GuestNavbar extends Component {
   render() {
     return (
       <div>
-        <Navbar color="dark" light expand="sm">
+        <Navbar color="primary" light expand="sm">
           <NavbarBrand href="/">FGxBiO</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

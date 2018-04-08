@@ -38,8 +38,8 @@ export default class PageManualSearch extends Component {
           return (
             <InputGroup>
               <Col>
-              <InputGroupAddon addonType="prepend">{Locus}</InputGroupAddon>
-              <Input type="text" size="3" name={Locus} id={Locus} />
+                <InputGroupAddon addonType="prepend" key={Locus}>{Locus}</InputGroupAddon>
+                <Input type="text" size="3" name={Locus} id={Locus} />
               </Col>
             </InputGroup>
           )

@@ -5,6 +5,7 @@ const path = require('path')
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
 const mysql = require('mysql')
+const fileUpload = require('express-fileupload')
 
 const config = require('./config')
 const api = require('./api')
@@ -17,11 +18,35 @@ app.server = http.createServer(app)
 app.use(bodyParser.json({
   limit: config.bodyLimit
 }))
-app.use(morgan('dev'))
-app.use(cookieParser())
 
-app.use(express.static(path.join(__dirname, 'src')))
+app.use(morgan('dev'))
+//morgan is a logger when request is coming in
+
+app.use(cookieParser())
+app.use(fileUpload())
+
+//load static object from dir 'src'
+app.use(express.static(path.join(__dirname, 'src/api')))
 // middleware
+
+app.use(function (req, res, next) {
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  // Pass to next layer of middleware
+  next();
+});
+
 
 app.use('/api', api)
 
