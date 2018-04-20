@@ -1,5 +1,6 @@
-const mysql = require('mysql')
+const BASE_URL = 'http://localhost:3001'
 
+//  - - - - - - - - - - - Autosomal kit list and Kit's Locus  - - - - - - - - - - - - -
 const Autosom_Kit_List = [
   'Minimal_A',
   'InvestigatorIDplex',
@@ -319,15 +320,9 @@ const Forenseq_X = [
   'HPRTB'
 ]
 
-const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Uq42=Tc8',
-  database: 'fxbio'
-})
-
-module.exports = {
-  con,
+export {
+  BASE_URL,
+  //Autosomal PART
   Autosom_Kit_List,
   Minimal_A,
   InvestigatorIDplex,
