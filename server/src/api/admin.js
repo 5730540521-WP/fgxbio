@@ -85,4 +85,22 @@ router.post(
   }
 )
 
+router.get(
+  '/adminsample/:sampleYear/:sampleID',
+  authServ.isAuthenticatedAdmin,
+  async (req, res, next) => {
+    console.log(req.params.sampleYear, ' ', req.params.sampleID)
+    con.query(
+      `SELECT * FROM ngs_data WHERE Sample_Year = '${
+        req.params.sampleYear
+      }' && Sample_ID = '${req.params.sampleID}';`,
+      function(err, result) {
+        if (err) throw err
+        console.log(result)
+        res.send(result)
+      }
+    )
+  }
+)
+
 module.exports = router

@@ -11,6 +11,7 @@ import PageStatisticLocus from './containers/PageStatisticLocus'
 import PageStatisticGeographic from './containers/PageStatisticGeographic'
 import PageAdminData from './containers/PageAdminData'
 import PageAdminSequence from './containers/PageAdminSequence'
+import PageAdminSample from './containers/PageAdminSample'
 
 import './App.css'
 
@@ -60,6 +61,17 @@ class App extends Component {
                 return <Redirect to="/" />
               } else {
                 return <PageAdminSequence />
+              }
+            }}
+          />
+          <Route
+            exact
+            path="/adminsample"
+            render={() => {
+              if (!user) {
+                return <Redirect to="/" />
+              } else {
+                return <PageAdminSample />
               }
             }}
           />
