@@ -13,7 +13,7 @@ class NormalLoginForm extends Component {
         console.log('Received values of form: ', values)
         axios.post(`${BASE_URL}/api/auth`, values).then(response => {
           if (response.data.token) {
-            localStorage.setItem('user', JSON.stringify(response.data))
+            localStorage.setItem('user', JSON.stringify(response.data.token))
             window.location = window.location.href
           }
         })

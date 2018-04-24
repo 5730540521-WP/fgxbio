@@ -37,9 +37,11 @@ export default class PageAdminSequence extends Component {
   }
 
   sequenceAlign() {
+    var token = localStorage.getItem('user')
     var data = {
       locus: this.state.selectedLocus,
-      allele: this.state.selectedAllele
+      allele: this.state.selectedAllele,
+      token: token.substring(1, token.length - 1)
     }
     axios.post(`${BASE_URL}/api/admin/seqalign`, data).then(
       function(response) {
@@ -58,7 +60,9 @@ export default class PageAdminSequence extends Component {
       <div className="container">
         <br />
 
-        <p>Please Pick Locus and Allele for Sequence alignment</p>
+        <p>
+          <strong>Please Pick Locus and Allele for Sequence alignment</strong>
+        </p>
         <br />
         <div>
           <InputGroup compact>
@@ -68,7 +72,9 @@ export default class PageAdminSequence extends Component {
               defaultValue="Select Locus"
             >
               {this.state.locuslist.map(sample => (
-                <Option value={sample.Locus}>{sample.Locus}</Option>
+                <Option value={sample.Locus} key={sample.Locus}>
+                  {sample.Locus}
+                </Option>
               ))}
             </Select>
             <Select
@@ -78,7 +84,11 @@ export default class PageAdminSequence extends Component {
             >
               {this.state.alleleInfo.map(sample => {
                 if (sample.locus == this.state.selectedLocus)
-                  return <Option value={sample.allele}>{sample.allele}</Option>
+                  return (
+                    <Option value={sample.allele} key={sample.allele}>
+                      {sample.allele}
+                    </Option>
+                  )
                 return null
               })}
             </Select>
@@ -113,7 +123,7 @@ export default class PageAdminSequence extends Component {
             <div className="columns">
               <div className="column">
                 {this.state.result.map(entry => (
-                  <div>
+                  <div key={entry.Sample_Year + entry.Sample_ID}>
                     <AlignmentEntry data={entry} />
                   </div>
                 ))}

@@ -1,4 +1,5 @@
-const con = require('../config/constant')
+const constant = require('../config/constant')
+const jwt = require('jsonwebtoken')
 
 async function authenticateAdmin(values) {
   const result = await con.query(
@@ -7,7 +8,7 @@ async function authenticateAdmin(values) {
     }'`
   )
   if (result.error) {
-    // throw error
+    throw error
   }
   console.log(JSON.stringify(result))
   console.log('userfound logging in')
@@ -16,10 +17,19 @@ async function authenticateAdmin(values) {
 }
 
 function isAuthenticatedAdmin(req, res, next) {
-  if (req.admin) return next()
-  return res
-    .status(401)
-    .json({ message: 'Admin Unauthorized. Please sign in before proceed.' })
+  var token = req.body.token || req.headers['token']
+  if (token) {
+    console.log('we have token herre : ', token)
+    jwt.verify(token, constant.SECRET_KEY, function(err, decode) {
+      if (err) {
+        res.status(401).send('Invalid Token')
+      } else {
+        next()
+      }
+    })
+  } else {
+    res.status(401).send('Unauthorize Access')
+  }
 }
 
 module.exports = {

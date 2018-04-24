@@ -44,32 +44,78 @@ router.post('/manual', async (req, res, next) => {
   //console.log("minimal", minimal);
   var command =
     'SELECT b.Sample_Year, b.Sample_ID FROM (SELECT a.Sample_Year, a.Sample_ID, COUNT(*) AS amount FROM (SELECT * FROM ngs_data WHERE '
+
+  var command_Total =
+    'SELECT COUNT(*) AS Total FROM (SELECT a.Sample_ID, a.Sample_Year, COUNT(*) AS Amount FROM (SELECT DISTINCT Sample_Year, Sample_ID, Locus FROM ngs_data WHERE '
   //console.log(data.length);
+  var Locus = []
+
   data.forEach(function(item) {
     console.log(item.locus, ' ', item.allele)
     command += `( Locus = '${item.locus}' && Allele = '${item.allele}') ||`
+    Locus.push(item.locus)
+  })
+
+  var uniq_Locus = Array.from(new Set(Locus))
+  uniq_Locus.map(sample => {
+    command_Total += ` Locus = '${sample}' ||`
   })
   command = command.substring(0, command.length - 3)
+  command_Total = command_Total.substring(0, command_Total.length - 3)
+
   command += `) a GROUP BY a.Sample_Year, a.Sample_ID) b WHERE b.amount = ${
     data.length
   };`
-  console.log(command)
-  con.query(command, function(err, resultSearch) {
+  command_Total += `) a GROUP BY a.Sample_ID, a.Sample_Year) b WHERE b.Amount = ${
+    uniq_Locus.length
+  };`
+  //console.log(command)
+  //console.log(command_Total)
+  con.query(command + command_Total, function(err, resultSearch) {
     if (err) throw err
-    var command2 =
+    var minimal_Locus = []
+    var command_expect =
       'SELECT b.Sample_Year, b.Sample_ID FROM (SELECT a.Sample_Year, a.Sample_ID, COUNT(*) AS amount FROM (SELECT * FROM ngs_data WHERE '
     minimal.forEach(function(item) {
-      console.log(item.locus, ' ', item.allele)
-      command2 += `( Locus = '${item.locus}' && Allele = '${item.allele}') ||`
+      //console.log(item.locus, ' ', item.allele)
+      minimal_Locus.push(item.locus)
+      command_expect += `( Locus = '${item.locus}' && Allele = '${
+        item.allele
+      }') ||`
     })
-    command2 = command2.substring(0, command2.length - 3)
-    command2 += `) a GROUP BY a.Sample_Year, a.Sample_ID) b WHERE b.amount = ${
+    command_expect = command_expect.substring(0, command_expect.length - 3)
+    command_expect += `) a GROUP BY a.Sample_Year, a.Sample_ID) b WHERE b.amount = ${
       minimal.length
     };`
-    console.log(command2)
-    con.query(command2, function(err, resultExpect) {
+    var minimal_uniqLocus = Array.from(new Set(minimal_Locus))
+    command_TotalMinimal =
+      'SELECT COUNT(*) AS Total FROM (SELECT a.Sample_ID, a.Sample_Year, COUNT(*) AS Amount FROM (SELECT DISTINCT Sample_Year, Sample_ID, Locus FROM ngs_data WHERE '
+    minimal_uniqLocus.map(sample => {
+      command_TotalMinimal += ` Locus = '${sample}' ||`
+    })
+    command_TotalMinimal = command_TotalMinimal.substring(
+      0,
+      command_TotalMinimal.length - 3
+    )
+    command_TotalMinimal += `) a GROUP BY a.Sample_ID, a.Sample_Year) b WHERE b.Amount = ${
+      minimal_uniqLocus.length
+    };`
+    //console.log(minimal)
+    console.log(command_expect)
+    console.log(command_TotalMinimal)
+    con.query(command_expect + command_TotalMinimal, function(
+      err,
+      resultExpect
+    ) {
       if (err) throw err
-      res.json({ result: resultSearch, expect: resultExpect })
+      //console.log(resultSearch[0])
+      //console.log(resultSearch[1])
+      res.json({
+        result: resultSearch[0],
+        result_total: resultSearch[1],
+        expect: resultExpect[0],
+        expect_total: resultExpect[1]
+      })
     })
   })
 })

@@ -18,7 +18,7 @@ class App extends Component {
   render() {
     const user = localStorage.getItem('user')
     return (
-      <div style={{ backgroundColor: '#87e8de' }}>
+      <div style={{ backgroundColor: '#e0ebeb' }}>
         <div className="navbar is-dark" />
         <div>
           {user ? (

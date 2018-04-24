@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Icon, message } from 'antd'
+import { Icon, message } from 'antd'
 import axios from 'axios'
 import { BASE_URL } from '../constants'
 
@@ -26,13 +26,20 @@ export default class PageSearch extends Component {
     data.append('file', event.target.files[0])
     data.append('name', 'excelAdd')
     data.append('description', 'Add data by excel')
+    var token = localStorage.getItem('user')
     this.setState({ fileUploadName: event.target.files[0].name })
-    axios.post(`${BASE_URL}/api/admin/exceladd`, data).then(response => {
-      if (response.data == 'success') {
-        message.success('Add Data Complete')
-        console.log(response) // do something with the response
-      } else message.error('File Upload Fail')
-    })
+    axios
+      .post(`${BASE_URL}/api/admin/exceladd`, data, {
+        headers: {
+          token: token.substring(1, token.length - 1)
+        }
+      })
+      .then(response => {
+        if (response.data == 'success') {
+          message.success('Add Data Complete')
+          console.log(response) // do something with the response
+        } else message.error('File Upload Fail')
+      })
   }
 
   render() {
@@ -69,6 +76,7 @@ export default class PageSearch extends Component {
             <br />
             <br />
             <div />
+            {/*
             <div>
               <h1>
                 Or manually input the Locus and Allele base on your test kit
@@ -78,7 +86,7 @@ export default class PageSearch extends Component {
 
             <Button type="primary" size="large" style={{ width: '50%' }}>
               <a href="/search/manual/">Manual Add</a>
-            </Button>
+    </Button>*/}
           </div>
           <br />
           <br />
@@ -91,7 +99,7 @@ export default class PageSearch extends Component {
             <br />
 
             <a
-              class="button is-success"
+              className="button is-success"
               style={{ width: '50%' }}
               onClick={this.downloadSample}
             >

@@ -27,7 +27,7 @@ export default class LocusStatisticInfo extends Component {
       labels: observed_allele,
       datasets: [
         {
-          label: 'Amount',
+          label: 'Allele Frequency',
           data: allele_amount,
           backgroundColor: '#f5222d'
         }
@@ -65,7 +65,7 @@ export default class LocusStatisticInfo extends Component {
           {this.state.heteroSummary.map(sample => {
             if (sample.Locus == this.state.locus)
               return (
-                <div>
+                <div key={sample.Locus}>
                   <br />
                   <p>
                     <strong>Locus : </strong>

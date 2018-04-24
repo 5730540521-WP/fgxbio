@@ -323,11 +323,17 @@ const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'Uq42=Tc8',
-  database: 'fxbio'
+  database: 'fxbio',
+  multipleStatements: true
 })
 
+const SECRET_KEY = 'FGxBIO_ADMIN'
+
 module.exports = {
+  //Web Constant
+  SECRET_KEY,
   con,
+  //Autosomal
   Autosom_Kit_List,
   Minimal_A,
   InvestigatorIDplex,

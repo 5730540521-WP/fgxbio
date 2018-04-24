@@ -24,7 +24,7 @@ export default class PageStatisticLocus extends Component {
   componentDidMount() {
     axios.get(`${BASE_URL}/api/resource/locuslist`).then(
       function(response) {
-        console.log(response.data)
+        //console.log(response.data)
         var A_list = []
         var Y_list = []
         var X_list = []
@@ -45,7 +45,7 @@ export default class PageStatisticLocus extends Component {
 
     axios.get(`${BASE_URL}/api/resource/hetero`).then(
       function(response) {
-        console.log(response.data)
+        //console.log(response.data)
         this.setState({ dataSummary: response.data })
       }.bind(this)
     )
@@ -55,7 +55,7 @@ export default class PageStatisticLocus extends Component {
     console.log('radio checked', e.target.value)
     axios.get(`${BASE_URL}/api/resource/locusinfo/${e.target.value}`).then(
       function(response) {
-        console.log(response.data)
+        //console.log(response.data)
         this.setState({ AlleleCount: response.data })
       }.bind(this)
     )

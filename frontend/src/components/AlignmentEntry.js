@@ -1,10 +1,10 @@
 import React from 'react'
 
 const AlphaColor = {
-  A: '#ff8533',
-  T: '#3399ff',
-  C: '#ffbb33',
-  G: '#00ff99'
+  A: '#5BF13E',
+  T: '#388BEE',
+  C: '#FFB23E',
+  G: '#ED493B'
 }
 
 export default props => (

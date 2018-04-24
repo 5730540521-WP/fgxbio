@@ -27,11 +27,16 @@ api.post('/auth', (req, res, next) => {
     `SELECT * FROM admins WHERE Username = '${username}' && Pass = '${password}'`,
     function(err, rows) {
       if (err) throw err
-      if (rows.length > 0)
-        res.json({
-          token: jwt.sign({ User_ID: rows[0].User_ID }, 'FGXBIO_ADMIN')
-        })
-      else res.send('Not Found')
+      if (rows.length > 0) {
+        var token = jwt.sign(
+          { User_ID: rows[0].User_ID },
+          constant.SECRET_KEY,
+          {
+            expiresIn: 4000
+          }
+        )
+        res.json({ token: token })
+      } else res.send('Not Found')
     }
   )
   //should have finished

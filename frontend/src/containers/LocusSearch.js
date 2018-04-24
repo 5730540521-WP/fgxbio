@@ -37,8 +37,10 @@ class LocusSearch extends Component {
       LocusKit: [],
       Result: [],
       ResultAmount: '0',
+      ResultFullAmount: '0',
       Minimal: [],
-      MinimalAmount: '0'
+      MinimalAmount: '0',
+      MinimalFullAmount: '0'
     }
   }
 
@@ -115,18 +117,22 @@ class LocusSearch extends Component {
         }
         const user = localStorage.getItem('user')
         axios.post(`${BASE_URL}/api/search/manual`, data).then(response => {
-          console.log(response.data)
+          //console.log(response.data)
           if (user) {
             this.setState({
               Result: response.data.result,
               ResultAmount: response.data.result.length,
+              ResultFullAmount: response.data.result_total,
               Minimal: response.data.expect,
-              MinimalAmount: response.data.expect.length
+              MinimalAmount: response.data.expect.length,
+              MinimalFullAmount: response.data.expect_total
             })
           } else
             this.setState({
               ResultAmount: response.data.result.length,
-              MinimalAmount: response.data.expect.length
+              ResultFullAmount: response.data.result_total,
+              MinimalAmount: response.data.expect.length,
+              MinimalFullAmount: response.data.expect_total
             })
         })
       }
@@ -174,19 +180,22 @@ class LocusSearch extends Component {
         </Row>
         <div>
           <p>
-            There are Total of {this.state.ResultAmount} sample matching in the
-            database
+            There are {this.state.ResultAmount} matching samples from{' '}
+            {this.state.ResultFullAmount[0].Total} samples in the database
           </p>
-          <p>The following samples</p>
+          <br />
           {user &&
             this.state.Result.map(sample => (
               <div>
                 Sample Year :{sample.Sample_Year} Sample ID : {sample.Sample_ID}
               </div>
             ))}
+          <br />
           <p>
-            Expect to match {this.state.MinimalAmount} samples in Minimal Kit
+            Expect to match {this.state.MinimalAmount} samples from{' '}
+            {this.state.MinimalFullAmount[0].Total} samples in Minimal Kit
           </p>
+          <br />
           {user &&
             this.state.Minimal.map(sample => (
               <div>
