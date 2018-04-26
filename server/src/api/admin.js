@@ -33,21 +33,26 @@ router.post(
     if (req.file) {
       console.log(`Received file ${req.file.originalname}`)
       child_proc.exec(
-        `python ./python/GenAddQuery.py ./uploads/${req.file.originalname}`,
-        function(err) {
+        `python ./python/GenAddQuerytry.py ./uploads/${req.file.originalname}`,
+        function(err, output) {
           if (err) {
             console.log('child process failed with error : ' + err)
             res.status(400).send('error')
           } else {
             console.log('SQL SCRIPT GENERATE')
-            execsql
+            //console.log(output)
+            con.query(output, function(err, results) {
+              if (err) throw err
+              else res.send('success')
+            })
+            /*execsql
               .config(dbConfig)
               .exec(sql)
               .execFile(sqlFile, function(err, results) {
                 if (err) throw err
                 console.log(results)
                 res.send('success')
-              })
+              }).end()*/
           }
         } /*run generate script from excel */
       )
