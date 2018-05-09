@@ -6,12 +6,14 @@ import GuestNavbar from './containers/GuestNavbar'
 import AdminNavbar from './containers/AdminNavbar'
 import PageIndex from './components/PageIndex'
 import PageSearch from './containers/PageSearch'
-import PageManualSearch from './containers/PageManualSearch'
+import ManualSearch from './containers/ManualSearch'
 import PageStatisticLocus from './containers/PageStatisticLocus'
 import PageStatisticGeographic from './containers/PageStatisticGeographic'
 import PageAdminData from './containers/PageAdminData'
 import PageAdminSequence from './containers/PageAdminSequence'
 import PageAdminSample from './containers/PageAdminSample'
+
+import PageSearchAll from './containers/PageSearchAll'
 
 import './App.css'
 
@@ -34,8 +36,9 @@ class App extends Component {
         </div>
         <Switch>
           <Route exact path="/" component={PageIndex} />{' '}
-          <Route exact path="/search" component={PageSearch} />
-          <Route exact path="/search/manual/" component={PageManualSearch} />
+          <Route exact path="/search" component={PageSearchAll} />
+          <Route exact path="/searchall" component={PageSearch} />
+          <Route exact path="/search/manual/" component={ManualSearch} />
           <Route exact path="/statistic/locus" component={PageStatisticLocus} />
           <Route
             exact

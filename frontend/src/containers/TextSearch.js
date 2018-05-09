@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { Form, Input, Button } from 'antd'
 import axios from 'axios'
 import { BASE_URL } from '../constants'
+import TextSampleImage from '../images/TextSample.png'
+
 const { TextArea } = Input
 const FormItem = Form.Item
 
-class SearchTextBox extends Component {
+class TextSearch extends Component {
   constructor(props) {
     super(props)
 
@@ -65,30 +67,53 @@ class SearchTextBox extends Component {
     const { getFieldDecorator } = this.props.form
     const user = localStorage.getItem('user')
     return (
-      <div style={{ width: '50%' }}>
-        <Form onSubmit={this.handleSubmit}>
-          <FormItem>
-            {getFieldDecorator('textinput', {
-              rules: [
-                { required: true, message: 'Please input your text search!' }
-              ]
-            })(
-              <TextArea
-                placeholder="CSF1PO:5,6"
-                autosize={{ minRows: 2, maxRows: 6 }}
-              />
-            )}
-          </FormItem>
-          <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
-              Text Search
-            </Button>
-          </FormItem>
-        </Form>
+      <div className="container">
+        <div className="columns">
+          <div className="column">
+            <p>
+              <strong>Please input the Locus and Allele</strong>
+            </p>
+            <br />
+            <div style={{ width: '100%' }}>
+              <Form onSubmit={this.handleSubmit}>
+                <FormItem>
+                  {getFieldDecorator('textinput', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Please input your text search!'
+                      }
+                    ]
+                  })(<TextArea placeholder="CSF1PO:5,6" autosize />)}
+                </FormItem>
+                <FormItem>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="login-form-button"
+                  >
+                    Text Search
+                  </Button>
+                </FormItem>
+              </Form>
+            </div>
+          </div>
+          <div className="column">
+            <p>
+              <strong>The pattern example can be found here</strong>
+            </p>
+            <br />
+            <p>
+              [Locus]:[Allele],[Allele]<br />[Locus]:[Allele]
+            </p>
+            <br />
+            <p>Just like the following example</p>
+            <div>
+              <img src={TextSampleImage} />
+            </div>
+          </div>
+        </div>
+
         <div>
           <p>
             There are {this.state.ResultAmount} matching samples from{' '}
@@ -119,6 +144,6 @@ class SearchTextBox extends Component {
   }
 }
 
-const WrappedSearchTextBox = Form.create()(SearchTextBox)
+const WrappedTextSearch = Form.create()(TextSearch)
 
-export default WrappedSearchTextBox
+export default WrappedTextSearch

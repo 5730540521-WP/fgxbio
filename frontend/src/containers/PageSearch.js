@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Icon, message } from 'antd'
 import axios from 'axios'
-import SearchTextBox from './SearchTextBox'
+import TextSearch from './TextSearch'
 import { BASE_URL } from '../constants'
 
 export default class PageSearch extends Component {
@@ -71,7 +71,7 @@ export default class PageSearch extends Component {
             <br />
             <br />
             <div />
-            <SearchTextBox />
+            <TextSearch />
             <br />
             <div>
               <h1>
