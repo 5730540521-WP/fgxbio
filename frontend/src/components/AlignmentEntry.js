@@ -18,6 +18,7 @@ export default props => (
           <span style={{ backgroundColor: AlphaColor[letter] }}>{letter}</span>
         ))}{' '}
       </div>
+      <div className="column is-1">{props.data.Read_Count}</div>
       <div className="column is-2">{props.data.pattern}</div>
     </div>
   </div>

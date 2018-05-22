@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import { Form, Icon, Input, Button } from 'antd'
 import axios from 'axios'
 import { BASE_URL } from '../constants'
+
 const FormItem = Form.Item
+const FullWord = {
+  A: 'Autosomal STR',
+  Y: 'Y STR',
+  X: 'X STR'
+}
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field])
@@ -20,6 +26,7 @@ class PageAdminSample extends Component {
     // To disabled submit button at the beginning.
     this.props.form.validateFields()
   }
+
   handleSubmit = e => {
     e.preventDefault()
     var token = localStorage.getItem('user')
@@ -59,7 +66,7 @@ class PageAdminSample extends Component {
       isFieldTouched('sampleID') && getFieldError('sampleID')
 
     return (
-      <div className="container">
+      <div className="container is-fluid">
         <br />
         <p>
           <strong>Admin Function for access specific sample information</strong>
@@ -121,6 +128,9 @@ class PageAdminSample extends Component {
             <div className="column is-1">
               <strong>Allele</strong>
             </div>
+            <div className="column is-1">
+              <strong>Read Count</strong>
+            </div>
             <div className="column">
               <strong>Sequence</strong>
             </div>
@@ -131,9 +141,10 @@ class PageAdminSample extends Component {
           {this.state.data.map(entry => {
             return (
               <div className="columns">
-                <div className="column is-1">{entry.DataType}</div>
+                <div className="column is-1">{FullWord[entry.DataType]}</div>
                 <div className="column is-1">{entry.Locus}</div>
                 <div className="column is-1">{entry.Allele}</div>
+                <div className="column is-1">{entry.Read_Count}</div>
                 <div className="column">{entry.Sequence}</div>
               </div>
             )

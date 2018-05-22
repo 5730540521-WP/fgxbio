@@ -84,7 +84,7 @@ Allele = sys.argv[2]
 db = _mysql.connect(host ="localhost", user="root", passwd="Uq42=Tc8", db="fxbio")
 
 if __name__ == "__main__":
-    db.query("SELECT * FROM ngs_data WHERE Locus = '" + Locus + "' && Allele = '" + Allele + "';")
+    db.query("SELECT * FROM ngs_data WHERE Locus = '" + Locus + "' && Allele = '" + Allele + "' ORDER BY Sequence;")
     query_LocusResult = db.store_result()
     row = query_LocusResult.fetch_row(1,2)
     while row is not None:
@@ -100,7 +100,7 @@ if __name__ == "__main__":
                 count += 1
                 sequence_iterate += len(Motif[Locus][array_iterate])
             else:
-                print(Motif[Locus][array_iterate] + " : " + str(count), end = ' ')
+                print("(" + Motif[Locus][array_iterate] + ")" + str(count), end = ' ')
                 array_iterate += 1
                 count = 0
         print('|', end='')

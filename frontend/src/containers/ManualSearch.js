@@ -36,7 +36,7 @@ export default class ManualSearch extends Component {
 
     this.state = {
       currentSet: 'Autosomal',
-      currentKit: 'Minimal'
+      currentKit: 'Minimal_A'
     }
 
     this.renderKitList = this.renderKitList.bind(this)

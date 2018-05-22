@@ -5,6 +5,12 @@ import LocusStatisticInfo from '../components/LocusStatisticInfo'
 import { BASE_URL } from '../constants'
 
 const RadioGroup = Radio.Group
+const RadioButton = Radio.Button
+const radioStyle = {
+  display: 'block',
+  height: '15px',
+  lineHeight: '15px'
+}
 
 export default class PageStatisticLocus extends Component {
   constructor(props) {
@@ -17,8 +23,11 @@ export default class PageStatisticLocus extends Component {
       LocusList_X: [],
       SelectedLocus: '',
       AlleleCount: [],
-      dataSummary: []
+      dataSummary: [],
+      currentSTR: 'AutosomalSTR'
     }
+
+    this.renderLocusList = this.renderLocusList.bind(this)
   }
 
   componentDidMount() {
@@ -64,100 +73,94 @@ export default class PageStatisticLocus extends Component {
     })
   }
 
-  render() {
-    const radioStyle = {
-      display: 'block',
-      height: '15px',
-      lineHeight: '15px'
-    }
+  renderLocusList() {
+    switch (this.state.currentSTR) {
+      case 'Autosomal_STR':
+        return (
+          <RadioGroup onChange={this.onChange} value={this.state.SelectedLocus}>
+            {this.state.LocusList_A.map(locus => (
+              <div className="column is-2">
+                <Radio style={radioStyle} value={locus.Locus} key={locus.locus}>
+                  <strong>{locus.Locus}</strong>
+                </Radio>
+              </div>
+            ))}
+          </RadioGroup>
+        )
 
-    //console.log('state displayinfo ', this.state.AlleleCount)
-    //console.log('datasumm', this.state.dataSummary)
+      case 'Y_STR':
+        return (
+          <RadioGroup onChange={this.onChange} value={this.state.SelectedLocus}>
+            {this.state.LocusList_Y.map(locus => (
+              <div className="column is-2">
+                <Radio style={radioStyle} value={locus.Locus} key={locus.locus}>
+                  <strong>{locus.Locus}</strong>
+                </Radio>
+              </div>
+            ))}
+          </RadioGroup>
+        )
+
+      case 'X_STR':
+        return (
+          <RadioGroup onChange={this.onChange} value={this.state.SelectedLocus}>
+            {this.state.LocusList_X.map(locus => (
+              <div className="column is-2">
+                <Radio style={radioStyle} value={locus.Locus} key={locus.locus}>
+                  <strong>{locus.Locus}</strong>
+                </Radio>
+              </div>
+            ))}
+          </RadioGroup>
+        )
+
+      default:
+        return (
+          <RadioGroup onChange={this.onChange} value={this.state.SelectedLocus}>
+            {this.state.LocusList_A.map(locus => (
+              <div className="column is-2">
+                <Radio style={radioStyle} value={locus.Locus} key={locus.locus}>
+                  <strong>{locus.Locus}</strong>
+                </Radio>
+              </div>
+            ))}
+          </RadioGroup>
+        )
+    }
+  }
+
+  render() {
     return (
-      <div className="container" style={{ backgroundColor: '#ffc53d' }}>
-        <Row>
-          <br />
-          <h1 className="title is-2">
-            <strong>
-              Full statistic of the haplotype in the database by locus
-            </strong>
-          </h1>
-          <div className="columns">
-            <div className="column is-3">
-              <br />
-              <br />
-              <p className="subtitle is-4">
-                <strong>Autosomal STR</strong>
-              </p>
-              <RadioGroup
-                onChange={this.onChange}
-                value={this.state.SelectedLocus}
-              >
-                {this.state.LocusList_A.map(locus => (
-                  <div className="column is-2">
-                    <Radio
-                      style={radioStyle}
-                      value={locus.Locus}
-                      key={locus.locus}
-                    >
-                      <strong>{locus.Locus}</strong>
-                    </Radio>
-                  </div>
-                ))}
-              </RadioGroup>
-              <br />
-              <p className="subtitle is-4">
-                <strong>Y_STR</strong>
-              </p>
-              <RadioGroup
-                onChange={this.onChange}
-                value={this.state.SelectedLocus}
-              >
-                {this.state.LocusList_Y.map(locus => (
-                  <div className="column is-2">
-                    <Radio
-                      style={radioStyle}
-                      value={locus.Locus}
-                      key={locus.locus}
-                    >
-                      <strong>{locus.Locus}</strong>
-                    </Radio>
-                  </div>
-                ))}
-              </RadioGroup>
-              <br />
-              <p className="subtitle is-4">
-                <strong>X_STR</strong>
-              </p>
-              <RadioGroup
-                onChange={this.onChange}
-                value={this.state.SelectedLocus}
-              >
-                {this.state.LocusList_X.map(locus => (
-                  <div className="column is-2">
-                    <Radio
-                      style={radioStyle}
-                      value={locus.Locus}
-                      key={locus.locus}
-                    >
-                      <strong>{locus.Locus}</strong>
-                    </Radio>
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-            <div className="column">
-              <br />
-              <br />
-              <br />
-              <LocusStatisticInfo
-                locus={this.state.SelectedLocus}
-                alleleCount={this.state.AlleleCount}
-                heteroSummary={this.state.dataSummary}
-              />
-            </div>
+      <div className="container">
+        <br />
+        <h1 className="title is-2">
+          <strong>
+            Full statistic of the haplotype in the database by locus
+          </strong>
+        </h1>
+        <div className="columns">
+          <div className="column is-3">
+            <RadioGroup
+              onChange={e => this.setState({ currentSTR: `${e.target.value}` })}
+              defaultValue="Autosomal_STR"
+            >
+              <RadioButton value="Autosomal_STR">Autosomal STR</RadioButton>
+              <RadioButton value="Y_STR">Y STR</RadioButton>
+              <RadioButton value="X_STR">X STR</RadioButton>
+            </RadioGroup>
+            <br />
+            <br />
+            {this.renderLocusList()}
+            <br />
           </div>
-        </Row>
+          <div className="column">
+            <LocusStatisticInfo
+              locus={this.state.SelectedLocus}
+              alleleCount={this.state.AlleleCount}
+              heteroSummary={this.state.dataSummary}
+            />
+          </div>
+        </div>
       </div>
     )
   }

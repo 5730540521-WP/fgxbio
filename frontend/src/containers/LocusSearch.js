@@ -34,7 +34,7 @@ class LocusSearch extends Component {
     super(props)
 
     this.state = {
-      LocusKit: [],
+      LocusKit: Minimal_A,
       Result: [],
       ResultAmount: '0',
       ResultFullAmount: '0',

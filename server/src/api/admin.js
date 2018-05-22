@@ -67,11 +67,11 @@ router.post(
     con.query(
       `SELECT * FROM ngs_data WHERE Locus = '${req.body.locus}' && Allele = '${
         req.body.allele
-      }';`,
+      }' ORDER BY Sequence;`,
       function(err, rows) {
         if (err) throw err
         child_proc.exec(
-          `python ./python/Sequence_Alignment.py ${req.body.locus} ${
+          `python ./python/Sequence_Alignment_Improve.py ${req.body.locus} ${
             req.body.allele
           }`,
           function(err, output) {
@@ -107,5 +107,16 @@ router.get(
     )
   }
 )
+
+router.get('/adminsnp', async (req, res, next) => {
+  con.query(
+    `SELECT Locus, Genotype, COUNT(*) AS Amount FROM isnp_data GROUP BY Locus, Genotype ORDER BY Locus;`,
+    function(err, result) {
+      if (err) throw err
+      console.log(result)
+      res.send(result)
+    }
+  )
+})
 
 module.exports = router

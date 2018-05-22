@@ -57,6 +57,9 @@ export default class GuestNavbar extends Component {
                     <a className="dropdown-item" href="/admindata">
                       Add Data
                     </a>
+                    <a className="dropdown-item" href="/adminisnp">
+                      iSNP Statistic
+                    </a>
                     <a className="dropdown-item" href="/adminsample">
                       Sample Information
                     </a>

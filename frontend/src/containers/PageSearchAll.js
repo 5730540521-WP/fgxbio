@@ -3,6 +3,7 @@ import { Radio } from 'antd'
 
 import ManualSearch from './ManualSearch'
 import TextSearch from './TextSearch'
+import ExcelSearch from './ExcelSearch'
 
 import TextSampleImage from '../images/TextSample.png'
 
@@ -23,7 +24,11 @@ export default class PageSearchAll extends Component {
   renderSearch() {
     switch (this.state.searchType) {
       case 'Excel':
-        return <div>Excel</div>
+        return (
+          <div>
+            <ExcelSearch />
+          </div>
+        )
 
       case 'Text':
         return (

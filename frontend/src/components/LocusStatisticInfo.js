@@ -77,9 +77,14 @@ export default class LocusStatisticInfo extends Component {
                   <br />
                   <p>
                     <strong>heterozygocity = </strong>
-                    {parseFloat(sample.Hetero) / parseFloat(sample.Total)}{' '}
+                    {(
+                      parseFloat(sample.Hetero) / parseFloat(sample.Total)
+                    ).toFixed(2)}{' '}
                     <strong>homozygocity : </strong>
-                    {1 - parseFloat(sample.Hetero) / parseFloat(sample.Total)}
+                    {(
+                      1 -
+                      parseFloat(sample.Hetero) / parseFloat(sample.Total)
+                    ).toFixed(2)}
                   </p>
                   <br />
                   <br />

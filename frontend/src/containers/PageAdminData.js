@@ -27,6 +27,7 @@ export default class PageSearch extends Component {
     data.append('name', 'excelAdd')
     data.append('description', 'Add data by excel')
     var token = localStorage.getItem('user')
+    var sample_name = event.target.files[0].name
     this.setState({ fileUploadName: event.target.files[0].name })
     axios
       .post(`${BASE_URL}/api/admin/exceladd`, data, {
@@ -36,8 +37,8 @@ export default class PageSearch extends Component {
       })
       .then(response => {
         if (response.data == 'success') {
-          message.success('Add Data Complete')
-          console.log(response) // do something with the response
+          message.success(`Add Data Sample ${sample_name} Complete`)
+          // do something with the response
         } else message.error('File Upload Fail')
       })
   }
@@ -76,17 +77,6 @@ export default class PageSearch extends Component {
             <br />
             <br />
             <div />
-            {/*
-            <div>
-              <h1>
-                Or manually input the Locus and Allele base on your test kit
-              </h1>
-            </div>
-            <br />
-
-            <Button type="primary" size="large" style={{ width: '50%' }}>
-              <a href="/search/manual/">Manual Add</a>
-    </Button>*/}
           </div>
           <br />
           <br />

@@ -12,6 +12,7 @@ import PageStatisticGeographic from './containers/PageStatisticGeographic'
 import PageAdminData from './containers/PageAdminData'
 import PageAdminSequence from './containers/PageAdminSequence'
 import PageAdminSample from './containers/PageAdminSample'
+import PageAdminSnp from './containers/PageAdminSnp'
 
 import PageSearchAll from './containers/PageSearchAll'
 
@@ -53,6 +54,17 @@ class App extends Component {
                 return <Redirect to="/" />
               } else {
                 return <PageAdminData />
+              }
+            }}
+          />
+          <Route
+            exact
+            path="/adminisnp"
+            render={() => {
+              if (!user) {
+                return <Redirect to="/" />
+              } else {
+                return <PageAdminSnp />
               }
             }}
           />

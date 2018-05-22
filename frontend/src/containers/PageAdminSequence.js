@@ -57,7 +57,7 @@ export default class PageAdminSequence extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container is-fluid">
         <br />
 
         <p>
@@ -115,6 +115,9 @@ export default class PageAdminSequence extends Component {
               <div className="column">
                 <strong>Repeated Sequence</strong>
               </div>
+              <div className="column is-1">
+                <strong>Read Count</strong>
+              </div>
               <div className="column is-2">
                 <strong>Pattern</strong>
               </div>
@@ -123,7 +126,9 @@ export default class PageAdminSequence extends Component {
             <div className="columns">
               <div className="column">
                 {this.state.result.map(entry => (
-                  <div key={entry.Sample_Year + entry.Sample_ID}>
+                  <div
+                    key={entry.Sample_Year + entry.Sample_ID + entry.Read_Count}
+                  >
                     <AlignmentEntry data={entry} />
                   </div>
                 ))}
