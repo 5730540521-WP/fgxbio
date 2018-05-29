@@ -28,15 +28,15 @@ Motif = {
     'D22S1045': ['1ATT','1ACT','1ATT'],
     'SE33':     ['1AAAG','2AG','1AAAG','2AG','1AAAG','2G','1AAAG','2AG'],
     'D6S1043':  ['1AGAT'],
-    'D17S1301': ['2None'],
-    'D20S482':  ['2None'],
-    'D4S2408':  ['2None'],
-    'D9S1122':  ['2None'],
+    'D17S1301': ['3None'],
+    'D20S482':  ['3None'],
+    'D4S2408':  ['3None'],
+    'D9S1122':  ['3None'],
     ##Y_somal
     'DYS19':    ['1TAGA'],
     'DYS385a-b':['1GAAA'],
     'DYS389I':  ['1TCTG','1TCTA'],
-    'DYF387S1': ['2None'],
+    'DYF387S1': ['3None'],
     'DYS390':   ['1TCTA','1TCTG'],
     'DYS391':   ['1TCTA'],
     'DYS392':   ['1TAT'],
@@ -45,20 +45,20 @@ Motif = {
     'DYS438':   ['1TTTTC'],
     'DYS439':   ['1AGAT'],
     'DYS448':   ['1AGAGAT'],
-    'DYS449':   ['2None'],
+    'DYS449':   ['3None'],
     'DYS456':   ['1AGAT'],
     'DYS458':   ['1GAAA'],
     'DYS460':   ['1ATAG'],
     'DYS481':   ['1CTT'],
     'DYS505':   ['1TCCT'],
-    'DYS518':   ['2None'],
+    'DYS518':   ['3None'],
     'DYS522':   ['1GATA'],
     'DYS533':   ['1ATCT'],
     'DYS549':   ['1GATA'],
     'DYS570':   ['1TTTC'],
     'DYS576':   ['1AAAG'],
     'DYS612':   ['1CCT','1CTT','1TCT','1CCT','1TCT'],
-    'DYS627':   ['2None'],
+    'DYS627':   ['3None'],
     'DYS635':   ['1TSTA'],
     'DYS643':   ['1CTTTT'],
     'Y-GATA-H4':['1TAGA'],
@@ -120,6 +120,9 @@ if __name__ == "__main__":
                     print(sequence[sequence_iterate:sequence_iterate + len(Motif[Locus][array_iterate][1:])], end =' ')
                     array_iterate += 1
                     sequence_iterate += len(Motif[Locus][array_iterate]) - 1
-                    
+                elif(Motif[Locus][array_iterate][0] =='3'):
+                    print('No Repeated Data', end ='')
+                    break
+
         print('|', end='')
         row = query_LocusResult.fetch_row(1, 2)
