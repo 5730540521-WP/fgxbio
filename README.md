@@ -8,6 +8,7 @@ Server
 	API server for database system only return specific information to client side from the request.
 
 Folder structure
+
 	- python
 		Leave python script here
 	- uploads
@@ -23,7 +24,7 @@ Folder structure
 	get api/resource/hetero		-	Heterozygocity		
 	post api/search/manual		-	(Exact Match) Haplotype matching
 		/config
-Config/constant set DBconfig on to connect to your own DB
+	Config/constant set DBconfig on to connect to your own DB
 		/public
 	Folder for file to be download to client
 		/service
@@ -31,11 +32,9 @@ Config/constant set DBconfig on to connect to your own DB
  
 Client Side
 
-Folder Structure
-	- src
+	- src	
 		/Components
 			-	Component without state
-
 		/Containers
 			-	Component with state
 		/Constants
