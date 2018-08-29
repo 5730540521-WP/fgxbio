@@ -119,7 +119,7 @@ if __name__ == "__main__":
                 elif(Motif[Locus][array_iterate][0] =='2'):
                     print(sequence[sequence_iterate:sequence_iterate + len(Motif[Locus][array_iterate][1:])], end =' ')
                     array_iterate += 1
-                    sequence_iterate += len(Motif[Locus][array_iterate]) - 1
+                    sequence_iterate += len(Motif[Locus][array_iterate])
                 elif(Motif[Locus][array_iterate][0] =='3'):
                     print('No Repeated Data', end ='')
                     break
