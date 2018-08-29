@@ -45,10 +45,11 @@ Client Side
 ### How do I get set up? ###
 
 1.	Clone the repository Server + Client
-2.	Dump DB from file “DumpDB_17_11_2017.sql”
-3.	Config the mysql to your DB just like 
-4.	Run node server npm start
-5.	Run Client yarn start
+2.	install the dependencies
+3.	Dump DB from file “DumpDB_17_11_2017.sql”
+4.	Config the mysql to your DB just like 
+5.	Run node server npm start
+6.	Run Client yarn start
 
 ### Contribution guidelines ###
 
