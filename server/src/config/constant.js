@@ -322,7 +322,7 @@ const Forenseq_X = [
 const con = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Uq42=Tc8',
+  password: '*******',
   database: 'fxbio',
   multipleStatements: true
 })
